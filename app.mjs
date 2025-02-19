@@ -1,9 +1,15 @@
-import express from "express"; 
+import express from "express";
 
 const app = express();
-const port = 30000;
+const port = process.env.port || 8080;
 
 app.get("/", (req, res) => {
+  res.send("This is  port ");
+});
+app.get("/sara", (req, res) => {
+  res.send("This is sara port ");
+});
+app.get("/ayesha", (req, res) => {
   res.send("This is ayesha port ");
 });
 

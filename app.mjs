@@ -1,37 +1,26 @@
 import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
 
 const app = express();
-const port = process.env.PORT || 9807;
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-
-app.use("/", express.static(path.join(__dirname, "frontend/dist")));
+const port = 9807;
 
 app.get("/", (req, res) => {
-  res.send("GET request running");
+  res.send("Hello Server");
 });
 
-app.get("/weather", (req, res) => {
-  res.json({ user: "tobi" });
+// Route to get the current day of the week (0-6, where 0 = Sunday)
+app.get("/day", (req, res) => {
+  res.json({ day: new Date().getDay() });
 });
 
-app.get("/weather/:cityName", (req, res) => {
-  res.json(req.params);
+// Route to get the full date and time
+app.get("/day/date", (req, res) => {
+  res.json({ date: new Date().toLocaleString() });
 });
 
-app.get("/weather/:cityName/:side", (req, res) => {
-  res.json(req.params);
+app.get("/day/date/year", (req, res) => {
+  res.json({ year: new Date().getFullYear() });
 });
-
-// Middleware to handle unmatched routes
-app.use((req, res) => {
-  res.send("Middleware running - Route not found");
-});
-
+// Start the server
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Server running on http://localhost:${port}`);
 });

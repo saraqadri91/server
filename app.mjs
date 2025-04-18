@@ -1,26 +1,23 @@
 import express from "express";
+import cors from "cors";
+import connectToDb from "./db/db.js"; // Ensure the correct path
+import userRoutes from "./routes/userRoutes.js"; // Ensure this file exists
 
 const app = express();
-const port = process.env.PORT || 9800;
 
+// Middleware
+app.use(express.json()); // Important to parse JSON requests
+app.use(cors());
 app.get("/", (req, res) => {
-  res.send("Hello Server");
+    res.send("API is running...");
 });
 
-// Route to get the current day of the week (0-6, where 0 = Sunday)
-app.get("/day", (req, res) => {
-  res.json({ day: new Date().getDay() });
-});
+// Routes
+app.use("/api/users", userRoutes); // Ensure correct route path
 
-// Route to get the full date and time
-app.get("/day/date", (req, res) => {
-  res.json({ date: new Date().toLocaleString() });
-});
+const PORT = process.env.PORT || 5780;
 
-app.get("/day/date/year", (req, res) => {
-  res.json({ year: new Date().getFullYear() });
-});
-// Start the server
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+app.listen(PORT, async () => {
+  await connectToDb(); // Ensure MongoDB connects before starting
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

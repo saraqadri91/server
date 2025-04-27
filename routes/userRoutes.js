@@ -21,7 +21,7 @@
 // router.post("/register", registerUser);
 
 // export default router;
-import express from "express";
+import express from "express";import { protect } from "../middleware/authMiddleware.js"; 
 import {
   registerUser,
   getUsers,
@@ -33,8 +33,11 @@ import {
 const router = express.Router();
 
 router.post("/register", registerUser);
+import { protect } from "../middleware/authMiddleware.js"; // ADD THIS
 router.post("/login", loginUser);
+import { protect } from "../middleware/authMiddleware.js"; // ADD THIS
 router.get("/", getUsers);
+import { protect } from "../middleware/authMiddleware.js"; // ADD THIS
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
 
